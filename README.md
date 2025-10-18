@@ -1,73 +1,146 @@
-# Welcome to your Lovable project
+# SmartShop - Clean Architecture + Hexagonal Architecture Demo
 
-## Project info
+## 🎯 Overview
+SmartShop is a full-stack web application that helps users find the best prices for food products across local stores. Built with **Clean Architecture** and **Hexagonal Architecture (Ports and Adapters)** principles.
 
-**URL**: https://lovable.dev/projects/c69a324d-c6f2-4266-a0fc-75b105476add
+## 🏗️ Architecture
 
-## How can I edit this code?
+This project demonstrates a hybrid approach combining:
+- **Clean Architecture**: Separation into distinct layers with dependency rules
+- **Hexagonal Architecture**: Ports and adapters for external dependencies
 
-There are several ways of editing your application.
+### Layer Structure
 
-**Use Lovable**
+```
+src/
+├── domain/                    # DOMAIN LAYER (Core Business Logic)
+│   ├── entities/             # Business entities
+│   │   ├── Product.ts        # Product entity with business logic
+│   │   ├── Store.ts          # Store entity
+│   │   ├── Price.ts          # Price entity with comparison logic
+│   │   └── ProductPrice.ts   # Aggregate entity
+│   └── usecases/             # Use cases (application business rules)
+│       ├── SearchProducts.ts # Product search logic
+│       └── GetBestPrice.ts   # Price comparison logic
+│
+├── adapters/                  # ADAPTER LAYER
+│   ├── controllers/          # Input adapters (React hooks as controllers)
+│   │   └── useProductSearch.ts
+│   └── presenters/           # Output adapters (view model transformers)
+│       └── ProductPresenter.ts
+│
+├── infrastructure/           # INFRASTRUCTURE LAYER (Frameworks & Drivers)
+│   └── repositories/        # Repository implementations (adapters)
+│       ├── MockProductRepository.ts  # Mock data adapter
+│       └── MockPriceRepository.ts    # Mock price adapter
+│
+└── components/              # UI COMPONENTS (Framework layer)
+    ├── SearchBar.tsx
+    ├── ProductCard.tsx
+    └── PriceComparison.tsx
+```
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c69a324d-c6f2-4266-a0fc-75b105476add) and start prompting.
+### Key Architectural Principles
 
-Changes made via Lovable will be committed automatically to this repo.
+#### 1. Dependency Rule
+Dependencies point inward. Domain layer has zero dependencies on outer layers.
 
-**Use your preferred IDE**
+```typescript
+// ✅ CORRECT: Use case depends on interface (port)
+export class SearchProducts {
+  constructor(private productRepository: ProductRepository) {} // Port
+}
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+// ✅ CORRECT: Infrastructure implements the port
+export class MockProductRepository implements ProductRepository {} // Adapter
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+#### 2. Ports and Adapters
 
-Follow these steps:
+**Ports** (Interfaces in domain layer):
+- `ProductRepository` - Port for product data access
+- `PriceRepository` - Port for price data access
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+**Adapters** (Implementations in infrastructure):
+- `MockProductRepository` - Adapter using mock data
+- Could be replaced with `ApiProductRepository`, `SupabaseProductRepository`, etc.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+#### 3. Dependency Inversion
 
-# Step 3: Install the necessary dependencies.
-npm i
+Business logic doesn't depend on frameworks:
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```typescript
+// Domain layer (independent)
+export interface ProductRepository {
+  searchProducts(query: string): Promise<Product[]>;
+}
+
+// Infrastructure layer (depends on domain)
+export class MockProductRepository implements ProductRepository {
+  async searchProducts(query: string): Promise<Product[]> {
+    // Implementation details
+  }
+}
+```
+
+## 🧪 Testing Benefits
+
+Each layer can be tested independently:
+
+```typescript
+// Test use case with mock repository
+const mockRepo = new MockProductRepository();
+const useCase = new SearchProducts(mockRepo);
+const results = await useCase.execute("milk");
+```
+
+## 🔄 Easy to Extend
+
+Want to replace mock data with a real API? Just create a new adapter:
+
+```typescript
+// New adapter - no changes needed to domain logic!
+export class ApiProductRepository implements ProductRepository {
+  async searchProducts(query: string): Promise<Product[]> {
+    const response = await fetch(`/api/products?q=${query}`);
+    return response.json();
+  }
+}
+```
+
+## 🚀 Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## 📦 Technologies
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- **Frontend**: React, TypeScript, Tailwind CSS
+- **Architecture**: Clean Architecture + Hexagonal Architecture
+- **Build Tool**: Vite
+- **UI Components**: shadcn/ui
 
-**Use GitHub Codespaces**
+## 🎓 Learning Resources
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- [Clean Architecture by Robert C. Martin](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+- [Hexagonal Architecture](https://alistair.cockburn.us/hexagonal-architecture/)
+- [Dependency Inversion Principle](https://en.wikipedia.org/wiki/Dependency_inversion_principle)
 
-## What technologies are used for this project?
+## 📝 Notes
 
-This project is built with:
+This implementation uses:
+- **Mock data** for demonstration (see `/infrastructure/repositories`)
+- **React hooks as controllers** (adapter pattern for React)
+- **Presenters** to transform domain models to view models
+- **Clear separation** between business logic and framework code
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/c69a324d-c6f2-4266-a0fc-75b105476add) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+The architecture makes it trivial to:
+- Switch from mock to real APIs
+- Add caching layers
+- Implement different UIs (mobile, CLI, etc.)
+- Test business logic without UI
