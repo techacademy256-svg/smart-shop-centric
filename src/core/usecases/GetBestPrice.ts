@@ -1,4 +1,4 @@
-// DOMAIN LAYER - USE CASE
+// CORE LAYER - USE CASE
 // Business logic for finding the best price for a product
 // Demonstrates core business rules independent of infrastructure
 

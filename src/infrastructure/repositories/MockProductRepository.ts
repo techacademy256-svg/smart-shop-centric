@@ -1,12 +1,12 @@
 // INFRASTRUCTURE LAYER - ADAPTER
 // Mock implementation of ProductRepository port
-// This can be replaced with real API calls without changing domain logic
+// This can be replaced with real API calls without changing core logic
 
-import { Product, ProductEntity } from "../../domain/entities/Product";
-import { ProductPrice } from "../../domain/entities/ProductPrice";
-import { PriceEntity } from "../../domain/entities/Price";
-import { StoreEntity } from "../../domain/entities/Store";
-import { ProductRepository } from "../../domain/usecases/SearchProducts";
+import { Product, ProductEntity } from "../../core/entities/Product";
+import { ProductPrice } from "../../core/entities/ProductPrice";
+import { PriceEntity } from "../../core/entities/Price";
+import { StoreEntity } from "../../core/entities/Store";
+import { ProductRepository } from "../../core/usecases/SearchProducts";
 
 // Mock data
 const mockProducts: Product[] = [

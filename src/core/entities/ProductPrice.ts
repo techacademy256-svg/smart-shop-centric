@@ -1,4 +1,4 @@
-// DOMAIN LAYER - AGGREGATE ENTITY
+// CORE LAYER - AGGREGATE ENTITY
 // Combines Product, Store, and Price information
 
 import { Product } from "./Product";

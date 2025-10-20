@@ -1,8 +1,8 @@
 // INFRASTRUCTURE LAYER - ADAPTER
 // Mock implementation of PriceRepository port
 
-import { ProductPrice } from "../../domain/entities/ProductPrice";
-import { PriceRepository } from "../../domain/usecases/GetBestPrice";
+import { ProductPrice } from "../../core/entities/ProductPrice";
+import { PriceRepository } from "../../core/usecases/GetBestPrice";
 import { MockProductRepository } from "./MockProductRepository";
 
 // ADAPTER: Implements the port interface

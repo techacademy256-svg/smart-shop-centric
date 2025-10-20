@@ -1,4 +1,4 @@
-// DOMAIN LAYER - ENTITY
+// CORE LAYER - ENTITY
 // Core business model representing a price for a product at a store
 
 export interface Price {

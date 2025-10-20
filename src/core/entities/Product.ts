@@ -1,4 +1,4 @@
-// DOMAIN LAYER - ENTITY
+// CORE LAYER - ENTITY
 // Core business model representing a product in the system
 // This is framework-agnostic and contains only business logic
 

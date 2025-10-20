@@ -1,9 +1,9 @@
 // ADAPTER LAYER - PRESENTER
-// Transforms domain entities into view models for the UI
+// Transforms core entities into view models for the UI
 // Separates presentation logic from business logic
 
-import { Product } from "../../domain/entities/Product";
-import { ProductPrice, BestDeal } from "../../domain/entities/ProductPrice";
+import { Product } from "../../core/entities/Product";
+import { ProductPrice, BestDeal } from "../../core/entities/ProductPrice";
 
 export interface ProductViewModel {
   id: string;

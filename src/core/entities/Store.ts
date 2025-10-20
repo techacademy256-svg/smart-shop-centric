@@ -1,4 +1,4 @@
-// DOMAIN LAYER - ENTITY
+// CORE LAYER - ENTITY
 // Core business model representing a store in the system
 
 export interface Store {

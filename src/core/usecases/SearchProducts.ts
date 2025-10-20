@@ -1,4 +1,4 @@
-// DOMAIN LAYER - USE CASE
+// CORE LAYER - USE CASE
 // Business logic for searching products
 // Independent of framework and infrastructure
 

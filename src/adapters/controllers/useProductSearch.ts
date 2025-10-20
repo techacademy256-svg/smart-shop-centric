@@ -3,13 +3,13 @@
 // Manages state and orchestrates business logic
 
 import { useState, useCallback } from "react";
-import { SearchProducts } from "../../domain/usecases/SearchProducts";
-import { GetBestPrice, BestPriceFilters } from "../../domain/usecases/GetBestPrice";
+import { SearchProducts } from "../../core/usecases/SearchProducts";
+import { GetBestPrice, BestPriceFilters } from "../../core/usecases/GetBestPrice";
 import { MockProductRepository } from "../../infrastructure/repositories/MockProductRepository";
 import { MockPriceRepository } from "../../infrastructure/repositories/MockPriceRepository";
 import { ProductPresenter, ProductViewModel, PriceComparisonViewModel } from "../presenters/ProductPresenter";
-import { Product } from "../../domain/entities/Product";
-import { ProductPrice, BestDeal } from "../../domain/entities/ProductPrice";
+import { Product } from "../../core/entities/Product";
+import { ProductPrice, BestDeal } from "../../core/entities/ProductPrice";
 
 // Dependency Injection: Create use case instances with repository adapters
 const productRepository = new MockProductRepository();
