@@ -20,6 +20,8 @@ const mockProducts: Product[] = [
   new ProductEntity("8", "Chicken Breast", "Meat", "Fresh Meats Co", "kg", undefined, "Boneless chicken breast"),
   new ProductEntity("9", "Olive Oil", "Pantry", "Mediterranean Gold", "L", undefined, "Extra virgin olive oil"),
   new ProductEntity("10", "Organic Carrots", "Vegetables", "Fresh Valley", "kg", undefined, "Organic carrots"),
+  new ProductEntity("11", "Coffee Capsules", "Beverages", "Tassimo", "pack", undefined, "Tassimo coffee capsules"),
+  new ProductEntity("12", "Bread", "Bakery", "Milina", "loaf", undefined, "Milina fresh bread"),
 ];
 
 const mockStores = [
